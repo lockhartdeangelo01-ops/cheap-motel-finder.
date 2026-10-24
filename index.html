@@ -1,105 +1,180 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101827">
+<meta name="description" content="A free, mobile-friendly motel search helper. Compare search sites and check fees before booking.">
 <title>Cheap Motel Finder</title>
 <style>
-:root{color-scheme:dark}
+:root{
+  color-scheme:dark;
+  --bg:#0c1320;--panel:#172235;--panel2:#202d42;--line:#314158;
+  --ink:#f4f7fb;--muted:#aebbd0;--teal:#54e0c0;--teal-dark:#0d7669;
+  --blue:#9dd9ff;--gold:#ffd782;--radius:22px;
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#101827;color:#f8fafc}
-header{padding:30px 18px;text-align:center;background:#075985}
-header h1{margin:0 0 10px;font-size:30px}
-header p{margin:0;color:#e0f2fe}
-main{max-width:650px;margin:22px auto;padding:0 15px}
-.card{background:#1e293b;padding:20px;border-radius:16px;border:1px solid #334155}
-label{display:block;margin:14px 0 6px;font-weight:bold}
-input,select,button{width:100%;padding:13px;border-radius:9px;border:1px solid #64748b;font-size:16px}
-input,select{background:#0f172a;color:white}
-button{margin-top:18px;background:#22c55e;color:#052e16;font-weight:bold;border:0;cursor:pointer}
-.links a{display:block;padding:13px;margin-top:10px;background:#334155;border-radius:9px;color:#bae6fd;text-decoration:none}
-.small{color:#cbd5e1;font-size:14px;line-height:1.5}
-footer{text-align:center;color:#94a3b8;padding:25px}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at top,#1a2940 0,#0c1320 48rem);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a,button,input,select{font:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.hero{padding:calc(25px + env(safe-area-inset-top)) 20px 25px;background:linear-gradient(140deg,#1b2d46,#15243a 58%,#103d42);border-bottom:1px solid #3b536b}
+.hero-inner,main,footer{max-width:760px;margin-inline:auto}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;color:var(--teal);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px #54e0c01e}
+h1{font-size:clamp(31px,7vw,43px);letter-spacing:-.045em;line-height:1.05;margin:14px 0 10px}
+.hero p{max-width:510px;color:#c4d2e4;margin:0;font-size:15px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.pill{border:1px solid #ffffff20;background:#ffffff0c;border-radius:999px;padding:6px 10px;font-size:12px;color:#e2ebf5}
+main{padding:18px 14px 30px}
+.card{background:linear-gradient(150deg,#19263a,#151f30);border:1px solid var(--line);border-radius:var(--radius);padding:19px;margin:0 0 14px;box-shadow:0 12px 30px #00000014}
+.section-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:15px}
+.step{flex:0 0 34px;height:34px;display:grid;place-items:center;border-radius:12px;background:#54e0c018;color:var(--teal);font-weight:850;border:1px solid #54e0c033}
+h2{font-size:19px;letter-spacing:-.02em;margin:0 0 3px}
+.sub{font-size:13px;color:var(--muted);margin:0}
+label{display:block;font-weight:700;font-size:12px;color:#dce6f3;margin:13px 0 6px}
+input,select{width:100%;min-height:49px;padding:12px 13px;border:1px solid #3b4c64;border-radius:13px;background:#0e1828;color:var(--ink);font-size:15px}
+input::placeholder{color:#8495ad}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:11px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;text-align:center;text-decoration:none;border:1px solid transparent;border-radius:14px;padding:13px 12px;min-height:49px;font-weight:800;font-size:14px;cursor:pointer;transition:transform .15s,filter .15s}
+.btn:active{transform:scale(.985)}
+.primary{background:var(--teal);color:#09211f}
+.secondary{background:#283950;color:#e8f3ff;border-color:#40536d}
+.outline{background:transparent;color:var(--blue);border-color:#4a607b}
+.wide{grid-column:1/-1}
+.status{padding:11px 12px;border-radius:13px;background:#0d1b2b;border:1px solid #2d435b;color:#c4d5e8;font-size:12px;margin-top:11px;overflow-wrap:anywhere}
+.micro{font-size:12px;color:var(--muted);margin:11px 0 0}
+.providers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.provider{display:flex;align-items:center;gap:11px;min-height:74px;padding:12px;background:#202e43;border:1px solid #35465e;border-radius:16px;color:var(--ink);text-decoration:none;transition:border-color .15s,transform .15s}
+.provider:active{transform:scale(.985)}
+.provider:hover{border-color:#7ca7c9}
+.provider-icon{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;border-radius:12px;background:#31455f;color:var(--blue);font-size:17px;font-weight:900}
+.provider strong{display:block;font-size:13px;line-height:1.25}
+.provider small{display:block;font-size:11px;color:var(--muted);margin-top:4px}
+.arrow{margin-left:auto;color:#b4c7dc;font-size:16px}
+.notice{display:flex;gap:10px;align-items:flex-start;border:1px solid #645332;background:#322a1b;border-radius:15px;padding:13px;color:#f6dfac;font-size:12px;margin-top:13px}
+.notice b{display:block;margin-bottom:2px;color:#ffe8b7}
+.checklist{display:grid;gap:11px}
+.check{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;border:1px solid #2f4057;border-radius:13px;background:#111c2c;font-size:13px;color:#d5deea}
+.check input{width:19px;min-height:19px;flex:0 0 19px;margin:1px 0 0;accent-color:var(--teal)}
+.check label{margin:0;font-weight:500;font-size:13px;color:#d5deea}
+details{border-top:1px solid var(--line);margin-top:13px;padding-top:12px}
+summary{cursor:pointer;font-size:13px;font-weight:750;color:#dce8f6}
+details ul{padding-left:20px;color:var(--muted);font-size:12px}
+footer{text-align:center;color:#8999b0;font-size:11px;padding:4px 22px calc(24px + env(safe-area-inset-bottom))}
+@media(min-width:560px){main{padding:24px 20px 40px}.hero{padding-inline:24px}.providers{grid-template-columns:repeat(3,1fr)}.card{padding:22px}.provider{min-height:82px}}
+@media(max-width:360px){.providers{grid-template-columns:1fr}.actions{grid-template-columns:1fr}.grid{gap:8px}.card{padding:15px}}
 </style>
 </head>
 <body>
-<header>
-<h1>🏨 Cheap Motel Finder</h1>
-<p>Find affordable stays and compare booking options.</p>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow"><span class="pulse"></span> Free motel search helper</div>
+    <h1>Cheap Motel<br>Finder</h1>
+    <p>Search around your destination, compare booking sites, and watch for extra costs before you pay.</p>
+    <div class="pills"><span class="pill">📍 Nearby searches</span><span class="pill">🗓️ Stay dates</span><span class="pill">✓ Fee checklist</span></div>
+  </div>
 </header>
 <main>
-<section class="card">
-<h2>Find a place to stay</h2>
-<form id="searchForm">
-<label for="city">City or ZIP code</label>
-<input id="city" placeholder="Columbia, SC" required>
-<label for="checkin">Check-in date</label>
-<input id="checkin" type="date" required>
-<label for="checkout">Check-out date</label>
-<input id="checkout" type="date" required>
-<label for="guests">Guests</label>
-<select id="guests">
-<option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
-</select>
-<label for="budget">Maximum nightly budget</label>
-<select id="budget">
-<option value="40">$40 per night</option>
-<option value="60">$60 per night</option>
-<option value="80">$80 per night</option>
-<option value="100">$100 per night</option>
-<option value="150">$150 per night</option>
-<option value="any">Show all prices</option>
-</select>
-<button type="submit">Search Affordable Stays</button>
-</form>
-</section>
-<section class="card" style="margin-top:18px">
-<h2>Compare booking sites</h2>
-<p class="small">Your search opens these services in separate pages. Check the final total before booking.</p>
-<div class="links" id="results">
-<a href="https://www.google.com/travel/hotels" target="_blank" rel="noopener">Google Hotels</a>
-<a href="https://www.booking.com/" target="_blank" rel="noopener">Booking.com</a>
-<a href="https://www.expedia.com/Hotels" target="_blank" rel="noopener">Expedia Hotels</a>
-<a href="https://www.hotels.com/" target="_blank" rel="noopener">Hotels.com</a>
-<a href="https://www.kayak.com/hotels" target="_blank" rel="noopener">KAYAK Hotels</a>
-</div>
-</section>
-<section class="card" style="margin-top:18px">
-<h2>Before you book</h2>
-<ul class="small">
-<li>Check taxes, deposits, and resort or property fees.</li>
-<li>Confirm the room is available for your dates.</li>
-<li>Ask whether a refundable deposit or ID is required.</li>
-<li>Confirm the total price for all guests and nights.</li>
-</ul>
-</section>
+  <section class="card">
+    <div class="section-head"><span class="step">01</span><div><h2>Choose your area</h2><p class="sub">Enter a city or ZIP, or share your location.</p></div></div>
+    <label for="place">City, ZIP code, or address</label>
+    <input id="place" autocomplete="street-address" placeholder="e.g. Columbia, SC">
+    <div class="actions">
+      <button class="btn primary" id="locate" type="button">⌖ Use my location</button>
+      <button class="btn secondary" id="nearby" type="button">Search nearby ↗</button>
+    </div>
+    <div class="status" id="locationStatus" aria-live="polite">Your location stays optional. Type a place instead if you prefer.</div>
+  </section>
+
+  <section class="card">
+    <div class="section-head"><span class="step">02</span><div><h2>Set your stay</h2><p class="sub">These details help fill in supported booking searches.</p></div></div>
+    <div class="grid">
+      <div><label for="checkin">Check-in</label><input type="date" id="checkin"></div>
+      <div><label for="checkout">Check-out</label><input type="date" id="checkout"></div>
+      <div><label for="guests">Guests</label><select id="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div><label for="rooms">Rooms</label><select id="rooms"><option selected>1</option><option>2</option><option>3</option><option>4</option></select></div>
+    </div>
+    <label for="budget">Maximum nightly budget</label>
+    <select id="budget">
+      <option value="">No limit selected</option><option value="40">$40 or less</option><option value="50">$50 or less</option>
+      <option value="60">$60 or less</option><option value="75">$75 or less</option><option value="100">$100 or less</option><option value="125">$125 or less</option>
+    </select>
+    <p class="micro">Budget is a guide for your search, not a verified price filter. Booking sites may show different rates and fees.</p>
+  </section>
+
+  <section class="card">
+    <div class="section-head"><span class="step">03</span><div><h2>Compare booking sites</h2><p class="sub">Tap a service to open a separate search page.</p></div></div>
+    <div class="providers">
+      <a class="provider" id="maps" target="_blank" rel="noopener"><span class="provider-icon">⌖</span><span><strong>Google Maps</strong><small>Nearby motels</small></span><span class="arrow">↗</span></a>
+      <a class="provider" id="google" target="_blank" rel="noopener"><span class="provider-icon">G</span><span><strong>Google Hotels</strong><small>Price search</small></span><span class="arrow">↗</span></a>
+      <a class="provider" id="booking" target="_blank" rel="noopener"><span class="provider-icon">B</span><span><strong>Booking.com</strong><small>Search stays</small></span><span class="arrow">↗</span></a>
+      <a class="provider" id="expedia" target="_blank" rel="noopener"><span class="provider-icon">E</span><span><strong>Expedia</strong><small>Search stays</small></span><span class="arrow">↗</span></a>
+      <a class="provider" id="hotels" target="_blank" rel="noopener"><span class="provider-icon">H</span><span><strong>Hotels.com</strong><small>Search stays</small></span><span class="arrow">↗</span></a>
+      <a class="provider" id="kayak" target="_blank" rel="noopener"><span class="provider-icon">K</span><span><strong>KAYAK</strong><small>Compare options</small></span><span class="arrow">↗</span></a>
+      <a class="btn outline wide" id="direct" target="_blank" rel="noopener">Find motel phone numbers & official sites ↗</a>
+    </div>
+    <div class="notice"><span>!</span><div><b>Confirm the real total before paying.</b> This free starter app opens search results; it does not independently verify live vacancy, prices, taxes, or deposits.</div></div>
+  </section>
+
+  <section class="card">
+    <div class="section-head"><span class="step">04</span><div><h2>Before you book</h2><p class="sub">Check each item before confirming a room.</p></div></div>
+    <div class="checklist">
+      <div class="check"><input type="checkbox" id="taxes"><label for="taxes">I checked the total including taxes and fees.</label></div>
+      <div class="check"><input type="checkbox" id="deposit"><label for="deposit">I asked about a refundable deposit or incidental hold.</label></div>
+      <div class="check"><input type="checkbox" id="id"><label for="id">I confirmed ID, minimum age, and payment requirements.</label></div>
+      <div class="check"><input type="checkbox" id="cancel"><label for="cancel">I checked check-in time and cancellation rules.</label></div>
+    </div>
+    <p class="micro">Helpful question to ask: “What is the full price for my dates, including tax, and is any deposit or card hold required?”</p>
+    <details><summary>About this free starter app</summary>
+      <ul>
+        <li>Uses your location only if you choose to share it.</li>
+        <li>Opens public search results on maps and booking websites.</li>
+        <li>Does not ask for or collect your payment-card details.</li>
+        <li>Does not book rooms or confirm live availability itself.</li>
+      </ul>
+    </details>
+  </section>
 </main>
-<footer>Cheap Motel Finder · Compare before you book</footer>
+<footer>Cheap Motel Finder · Free starter app · Always confirm the details directly with the property or booking provider.</footer>
 <script>
-document.getElementById('searchForm').addEventListener('submit',function(e){
-e.preventDefault();
-const city=document.getElementById('city').value.trim();
-const start=document.getElementById('checkin').value;
-const end=document.getElementById('checkout').value;
-const guests=document.getElementById('guests').value;
-if(!city){alert('Enter a city or ZIP code.');return;}
-if(!start||!end||end<=start){alert('Choose a checkout date after your check-in date.');return;}
-const q=encodeURIComponent(city);
-const inDate=encodeURIComponent(start);
-const outDate=encodeURIComponent(end);
-const g=encodeURIComponent(guests);
-const urls=[
-['Google Hotels',`https://www.google.com/travel/hotels?q=${q}&checkin=${inDate}&checkout=${outDate}`],
-['Booking.com',`https://www.booking.com/searchresults.html?ss=${q}&checkin=${inDate}&checkout=${outDate}&group_adults=${g}`],
-['Expedia',`https://www.expedia.com/Hotel-Search?destination=${q}&startDate=${inDate}&endDate=${outDate}&rooms=1&adults=${g}`],
-['Hotels.com',`https://www.hotels.com/Hotel-Search?destination=${q}&startDate=${inDate}&endDate=${outDate}&adults=${g}`],
-['KAYAK',`https://www.kayak.com/hotels/${q}/${inDate}/${outDate}/${g}adults`]
-];
-document.getElementById('results').innerHTML=urls.map(x=>`<a href="${x[1]}" target="_blank" rel="noopener">${x[0]} — Search stays ↗</a>`).join('');
-document.getElementById('results').scrollIntoView({behavior:'smooth'});
+const $ = id => document.getElementById(id);
+const today = new Date();
+const iso = d => { const x = new Date(d.getTime() - d.getTimezoneOffset() * 60000); return x.toISOString().slice(0,10); };
+$('checkin').value = iso(today);
+const tomorrow = new Date(today); tomorrow.setDate(today.getDate()+1); $('checkout').value = iso(tomorrow);
+let coords = null;
+function placeText(){ return $('place').value.trim() || (coords ? `${coords.lat},${coords.lon}` : 'motels near me'); }
+function stayDates(){ return {in:$('checkin').value,out:$('checkout').value,guests:$('guests').value,rooms:$('rooms').value,budget:$('budget').value}; }
+function refreshLinks(){
+ const p = placeText(), s = stayDates(), query = `motels ${p}`;
+ $('maps').href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query);
+ $('google').href = 'https://www.google.com/search?q=' + encodeURIComponent(`${query} hotel prices ${s.in} to ${s.out} ${s.guests} guests${s.budget ? ' under $'+s.budget+' per night' : ''}`);
+ $('booking').href = 'https://www.booking.com/searchresults.html?ss=' + encodeURIComponent(p) + '&checkin=' + encodeURIComponent(s.in) + '&checkout=' + encodeURIComponent(s.out) + '&group_adults=' + s.guests + '&no_rooms=' + s.rooms;
+ $('expedia').href = 'https://www.expedia.com/Hotel-Search?destination=' + encodeURIComponent(p) + '&startDate=' + encodeURIComponent(s.in) + '&endDate=' + encodeURIComponent(s.out) + '&adults=' + s.guests;
+ $('hotels').href = 'https://www.hotels.com/Hotel-Search?destination=' + encodeURIComponent(p) + '&startDate=' + encodeURIComponent(s.in) + '&endDate=' + encodeURIComponent(s.out) + '&adults=' + s.guests;
+ $('kayak').href = 'https://www.kayak.com/hotels/' + encodeURIComponent(p.replace(/\s+/g,'-')) + '/' + s.in + '/' + s.out + '/' + s.guests + 'adults';
+ $('direct').href = 'https://www.google.com/search?q=' + encodeURIComponent(`motels ${p} official website phone number`);
+}
+$('locate').addEventListener('click',()=>{
+ if(!navigator.geolocation){$('locationStatus').textContent='Location is not supported here. Type a city or ZIP code instead.';return;}
+ $('locationStatus').textContent='Requesting location permission…';
+ navigator.geolocation.getCurrentPosition(pos=>{
+  coords={lat:pos.coords.latitude,lon:pos.coords.longitude};
+  $('place').value=`${coords.lat.toFixed(5)}, ${coords.lon.toFixed(5)}`;
+  $('locationStatus').textContent='Location added. Tap “Search nearby” to open map results.';
+  refreshLinks();
+ },()=>{
+  $('locationStatus').textContent='Could not get location. Allow location access in your browser settings or type a city/ZIP code.';
+ },{enableHighAccuracy:false,timeout:10000,maximumAge:300000});
 });
+$('nearby').addEventListener('click',()=>{
+ refreshLinks();
+ window.open($('maps').href,'_blank','noopener');
+});
+['place','checkin','checkout','guests','rooms','budget'].forEach(id=>$(id).addEventListener('input',refreshLinks));
+refreshLinks();
 </script>
 </body>
 </html>
-
