@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#123b32">
+<title>Cheap Motel Finder</title>
+<style>
+:root{--green:#123b32;--mint:#e7f3ed;--ink:#17211d;--muted:#61716a;--line:#dce5df;--white:#fff;--gold:#f5c45e}
+*{box-sizing:border-box}body{margin:0;background:#f5f7f5;color:var(--ink);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{background:var(--green);color:white;padding:26px 18px 24px;border-radius:0 0 24px 24px}
+header .eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.8;font-weight:700}
+h1{font-size:29px;line-height:1.1;margin:8px 0}header p{margin:8px 0 0;color:#dcebe4;font-size:14px}
+main{max-width:720px;margin:auto;padding:16px 14px 36px}.card{background:white;border:1px solid var(--line);border-radius:18px;padding:17px;margin-bottom:14px;box-shadow:0 3px 12px #153b3210}
+h2{font-size:18px;margin:0 0 12px}.sub{font-size:13px;color:var(--muted);margin-top:-5px;margin-bottom:12px}
+label{display:block;font-weight:650;font-size:13px;margin:10px 0 5px}
+input,select{width:100%;padding:12px;border:1px solid #cbd8d0;border-radius:11px;background:#fff;font:inherit;color:var(--ink);min-height:46px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{display:flex;align-items:center;justify-content:center;text-align:center;text-decoration:none;border:0;border-radius:12px;padding:13px 14px;min-height:47px;font-weight:750;font-size:15px;cursor:pointer}
+.primary{background:var(--green);color:white}.secondary{background:var(--mint);color:var(--green);border:1px solid #cfe1d6}.outline{background:white;color:var(--green);border:1px solid var(--line)}
+.buttons{display:grid;grid-template-columns:1fr 1fr;gap:9px}.buttons .wide{grid-column:1/-1}
+.note{font-size:13px;color:var(--muted);margin:10px 0 0}.status{padding:11px 12px;border-radius:11px;background:#f1f6f2;color:#315347;font-size:13px;margin-top:10px;overflow-wrap:anywhere}
+.check{display:flex;gap:9px;align-items:flex-start;font-size:14px;margin:10px 0}.check input{width:19px;min-height:19px;margin:2px 0 0;accent-color:var(--green)}
+ul{padding-left:20px;margin:8px 0}.fine{font-size:12px;color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:8px 20px 22px}
+@media(min-width:600px){header{padding:32px max(22px,calc((100% - 680px)/2)) 28px}.grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Simple • Mobile-friendly • Free</div>
+  <h1>Cheap Motel Finder</h1>
+  <p>Find nearby motels, compare booking options, and check the extra costs before you book.</p>
+</header>
+<main>
+  <section class="card">
+    <h2>Where are you looking?</h2>
+    <p class="sub">Use your location or enter a city or ZIP code.</p>
+    <label for="place">City, ZIP code, or address</label>
+    <input id="place" autocomplete="street-address" placeholder="Use my location, or enter a place">
+    <div class="buttons" style="margin-top:10px">
+      <button class="btn primary" id="locate">Use my location</button>
+      <button class="btn secondary" id="nearby">Search nearby motels</button>
+    </div>
+    <div class="status" id="locationStatus" aria-live="polite">Location has not been shared. You can type a place instead.</div>
+  </section>
+
+  <section class="card">
+    <h2>Your stay</h2>
+    <div class="grid">
+      <div><label for="checkin">Check-in</label><input type="date" id="checkin"></div>
+      <div><label for="checkout">Check-out</label><input type="date" id="checkout"></div>
+      <div><label for="guests">Guests</label><select id="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div><label for="rooms">Rooms</label><select id="rooms"><option selected>1</option><option>2</option><option>3</option><option>4</option></select></div>
+    </div>
+    <label for="budget">Maximum nightly price (optional)</label>
+    <select id="budget">
+      <option value="">No limit — show available options</option>
+      <option value="40">$40 or less</option><option value="50">$50 or less</option>
+      <option value="60">$60 or less</option><option value="75">$75 or less</option>
+      <option value="100">$100 or less</option><option value="125">$125 or less</option>
+    </select>
+    <p class="note">Budget filters on this starter app help guide your search; external booking sites determine actual rates and availability.</p>
+  </section>
+
+  <section class="card">
+    <h2>Compare motel options</h2>
+    <p class="sub">These open external search results. Confirm the final total before paying.</p>
+    <div class="buttons">
+      <a class="btn primary" id="maps" target="_blank" rel="noopener">Nearby motels · Maps</a>
+      <a class="btn secondary" id="google" target="_blank" rel="noopener">Hotel price search</a>
+      <a class="btn secondary" id="booking" target="_blank" rel="noopener">Booking.com</a>
+      <a class="btn secondary" id="expedia" target="_blank" rel="noopener">Expedia</a>
+      <a class="btn secondary" id="hotels" target="_blank" rel="noopener">Hotels.com</a>
+      <a class="btn secondary" id="kayak" target="_blank" rel="noopener">KAYAK</a>
+      <a class="btn outline wide" id="direct" target="_blank" rel="noopener">Search motels to contact directly</a>
+    </div>
+    <p class="note">Prices, taxes, deposits, and vacancy are not supplied by this app. Results may vary by date, guest count, and provider.</p>
+  </section>
+
+  <section class="card">
+    <h2>Before you book</h2>
+    <div class="check"><input type="checkbox" id="taxes"><label for="taxes" style="margin:0;font-weight:500">I checked the total including taxes and fees.</label></div>
+    <div class="check"><input type="checkbox" id="deposit"><label for="deposit" style="margin:0;font-weight:500">I checked whether a refundable security deposit is required.</label></div>
+    <div class="check"><input type="checkbox" id="id"><label for="id" style="margin:0;font-weight:500">I confirmed the ID, age, and payment requirements.</label></div>
+    <div class="check"><input type="checkbox" id="cancel"><label for="cancel" style="margin:0;font-weight:500">I checked cancellation and check-in times.</label></div>
+    <p class="fine">Tip: call the motel directly and ask: “What is the full price for my dates, including tax, and is there a deposit or incidental hold?”</p>
+  </section>
+
+  <section class="card">
+    <h2>How this starter version works</h2>
+    <ul>
+      <li>Uses your iPhone browser location only if you choose to share it.</li>
+      <li>Opens public search results from Maps and booking websites.</li>
+      <li>Does not collect your account, card, or payment details.</li>
+      <li>Does not book rooms or verify live vacancy by itself.</li>
+    </ul>
+    <p class="fine">Affiliate links, live price feeds, and direct booking would require provider agreements or integrations in a later version.</p>
+  </section>
+</main>
+<footer>Cheap Motel Finder · Free starter app · Always confirm details with the property or booking provider.</footer>
+<script>
+const $ = id => document.getElementById(id);
+const today = new Date();
+const iso = d => { const x=new Date(d.getTime()-d.getTimezoneOffset()*60000); return x.toISOString().slice(0,10); };
+$('checkin').value=iso(today);
+const tomorrow=new Date(today); tomorrow.setDate(today.getDate()+1); $('checkout').value=iso(tomorrow);
+let coords = null;
+function placeText(){ return $('place').value.trim() || (coords ? `${coords.lat},${coords.lon}` : 'motels near me'); }
+function stayDates(){ return {in:$('checkin').value,out:$('checkout').value,guests:$('guests').value,rooms:$('rooms').value,budget:$('budget').value}; }
+function refreshLinks(){
+ const p=placeText(), s=stayDates(), query=`motels ${p}`;
+ $('maps').href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(query);
+ $('google').href='https://www.google.com/search?q='+encodeURIComponent(`${query} hotel prices ${s.in} to ${s.out} ${s.guests} guests`);
+ $('booking').href='https://www.booking.com/searchresults.html?ss='+encodeURIComponent(p)+'&checkin='+encodeURIComponent(s.in)+'&checkout='+encodeURIComponent(s.out)+'&group_adults='+s.guests+'&no_rooms='+s.rooms;
+ $('expedia').href='https://www.expedia.com/Hotel-Search?destination='+encodeURIComponent(p)+'&startDate='+encodeURIComponent(s.in)+'&endDate='+encodeURIComponent(s.out)+'&adults='+s.guests;
+ $('hotels').href='https://www.hotels.com/Hotel-Search?destination='+encodeURIComponent(p)+'&startDate='+encodeURIComponent(s.in)+'&endDate='+encodeURIComponent(s.out)+'&adults='+s.guests;
+ $('kayak').href='https://www.kayak.com/hotels/'+encodeURIComponent(p.replace(/\s+/g,'-'))+'/'+s.in+'/'+s.out+'/'+s.guests+'adults';
+ $('direct').href='https://www.google.com/search?q='+encodeURIComponent(`motels ${p} official website phone number`);
+}
+$('locate').addEventListener('click',()=>{
+ if(!navigator.geolocation){$('locationStatus').textContent='Location is not supported here. Type a city or ZIP code.';return;}
+ $('locationStatus').textContent='Requesting location permission…';
+ navigator.geolocation.getCurrentPosition(pos=>{
+  coords={lat:pos.coords.latitude,lon:pos.coords.longitude};
+  $('place').value=`${coords.lat.toFixed(5)}, ${coords.lon.toFixed(5)}`;
+  $('locationStatus').textContent='Location added. Tap “Search nearby motels” to open map results.';
+  refreshLinks();
+ },err=>{$('locationStatus').textContent='Could not get location. Allow location access in your browser settings or enter a city/ZIP code.';},{enableHighAccuracy:false,timeout:10000,maximumAge:300000});
+});
+$('nearby').addEventListener('click',()=>{refreshLinks();window.open($('maps').href,'_blank','noopener');});
+['place','checkin','checkout','guests','rooms','budget'].forEach(id=>$(id).addEventListener('input',refreshLinks));
+refreshLinks();
+</script>
+</body>
+</html>
