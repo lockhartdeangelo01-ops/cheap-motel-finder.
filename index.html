@@ -1,1 +1,105 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cheap Motel Finder</title>
+<style>
+:root{color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#101827;color:#f8fafc}
+header{padding:30px 18px;text-align:center;background:#075985}
+header h1{margin:0 0 10px;font-size:30px}
+header p{margin:0;color:#e0f2fe}
+main{max-width:650px;margin:22px auto;padding:0 15px}
+.card{background:#1e293b;padding:20px;border-radius:16px;border:1px solid #334155}
+label{display:block;margin:14px 0 6px;font-weight:bold}
+input,select,button{width:100%;padding:13px;border-radius:9px;border:1px solid #64748b;font-size:16px}
+input,select{background:#0f172a;color:white}
+button{margin-top:18px;background:#22c55e;color:#052e16;font-weight:bold;border:0;cursor:pointer}
+.links a{display:block;padding:13px;margin-top:10px;background:#334155;border-radius:9px;color:#bae6fd;text-decoration:none}
+.small{color:#cbd5e1;font-size:14px;line-height:1.5}
+footer{text-align:center;color:#94a3b8;padding:25px}
+</style>
+</head>
+<body>
+<header>
+<h1>🏨 Cheap Motel Finder</h1>
+<p>Find affordable stays and compare booking options.</p>
+</header>
+<main>
+<section class="card">
+<h2>Find a place to stay</h2>
+<form id="searchForm">
+<label for="city">City or ZIP code</label>
+<input id="city" placeholder="Columbia, SC" required>
+<label for="checkin">Check-in date</label>
+<input id="checkin" type="date" required>
+<label for="checkout">Check-out date</label>
+<input id="checkout" type="date" required>
+<label for="guests">Guests</label>
+<select id="guests">
+<option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+</select>
+<label for="budget">Maximum nightly budget</label>
+<select id="budget">
+<option value="40">$40 per night</option>
+<option value="60">$60 per night</option>
+<option value="80">$80 per night</option>
+<option value="100">$100 per night</option>
+<option value="150">$150 per night</option>
+<option value="any">Show all prices</option>
+</select>
+<button type="submit">Search Affordable Stays</button>
+</form>
+</section>
+<section class="card" style="margin-top:18px">
+<h2>Compare booking sites</h2>
+<p class="small">Your search opens these services in separate pages. Check the final total before booking.</p>
+<div class="links" id="results">
+<a href="https://www.google.com/travel/hotels" target="_blank" rel="noopener">Google Hotels</a>
+<a href="https://www.booking.com/" target="_blank" rel="noopener">Booking.com</a>
+<a href="https://www.expedia.com/Hotels" target="_blank" rel="noopener">Expedia Hotels</a>
+<a href="https://www.hotels.com/" target="_blank" rel="noopener">Hotels.com</a>
+<a href="https://www.kayak.com/hotels" target="_blank" rel="noopener">KAYAK Hotels</a>
+</div>
+</section>
+<section class="card" style="margin-top:18px">
+<h2>Before you book</h2>
+<ul class="small">
+<li>Check taxes, deposits, and resort or property fees.</li>
+<li>Confirm the room is available for your dates.</li>
+<li>Ask whether a refundable deposit or ID is required.</li>
+<li>Confirm the total price for all guests and nights.</li>
+</ul>
+</section>
+</main>
+<footer>Cheap Motel Finder · Compare before you book</footer>
+<script>
+document.getElementById('searchForm').addEventListener('submit',function(e){
+e.preventDefault();
+const city=document.getElementById('city').value.trim();
+const start=document.getElementById('checkin').value;
+const end=document.getElementById('checkout').value;
+const guests=document.getElementById('guests').value;
+if(!city){alert('Enter a city or ZIP code.');return;}
+if(!start||!end||end<=start){alert('Choose a checkout date after your check-in date.');return;}
+const q=encodeURIComponent(city);
+const inDate=encodeURIComponent(start);
+const outDate=encodeURIComponent(end);
+const g=encodeURIComponent(guests);
+const urls=[
+['Google Hotels',`https://www.google.com/travel/hotels?q=${q}&checkin=${inDate}&checkout=${outDate}`],
+['Booking.com',`https://www.booking.com/searchresults.html?ss=${q}&checkin=${inDate}&checkout=${outDate}&group_adults=${g}`],
+['Expedia',`https://www.expedia.com/Hotel-Search?destination=${q}&startDate=${inDate}&endDate=${outDate}&rooms=1&adults=${g}`],
+['Hotels.com',`https://www.hotels.com/Hotel-Search?destination=${q}&startDate=${inDate}&endDate=${outDate}&adults=${g}`],
+['KAYAK',`https://www.kayak.com/hotels/${q}/${inDate}/${outDate}/${g}adults`]
+];
+document.getElementById('results').innerHTML=urls.map(x=>`<a href="${x[1]}" target="_blank" rel="noopener">${x[0]} — Search stays ↗</a>`).join('');
+document.getElementById('results').scrollIntoView({behavior:'smooth'});
+});
+</script>
+</body>
+</html>
+
